@@ -14,6 +14,7 @@ package no.uib.inf101.gridview;
 import no.uib.inf101.colorgrid.*;
 import org.junit.jupiter.api.Test;
 
+import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Constructor;
@@ -28,10 +29,14 @@ public class TestGridView {
   @Test
   public void preferredSize() {
     GridView view = newGridView(null);
-    assertNotNull(view, "Unable to create a new GridView object");
-    assertNotNull(view.getPreferredSize(), "PreferredSize should not be null");
-    assertEquals(400, view.getPreferredSize().width);
-    assertEquals(300, view.getPreferredSize().height);
+    if ((Object) view instanceof JPanel panel) {
+      assertNotNull(panel, "Unable to create a new GridView object");
+      assertNotNull(panel.getPreferredSize(), "PreferredSize should not be null");
+      assertEquals(400, panel.getPreferredSize().width);
+      assertEquals(300, panel.getPreferredSize().height);
+    } else {
+      fail("The GridView class should extend JPanel");
+    }
   }
 
   @Test

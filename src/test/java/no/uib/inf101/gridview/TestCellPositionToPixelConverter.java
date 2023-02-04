@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +30,32 @@ public class TestCellPositionToPixelConverter {
         grid, new Rectangle2D.Double(30, 30, 340, 240), 30);
 
     Rectangle2D expected = new Rectangle2D.Double(215, 130, 47.5, 40);
-    assertEquals(expected, converter.getBoundsForCell(new CellPosition(1, 2)));
+    assertEquals(expected, getBoundsForCell(converter, new CellPosition(1, 2)));
   }
 
   /////////////////////////////
   // Helper methods
   /////////////////////////////
+
+  static Rectangle2D getBoundsForCell(CellPositionToPixelConverter converter, CellPosition cp) {
+    try {
+      Method method = CellPositionToPixelConverter.class.getMethod("getBoundsForCell", CellPosition.class);
+      // Check that the method is public
+      assertFalse(Modifier.isPrivate(method.getModifiers()),
+          "The method getBoundsForCell(CellPosition) in the CellPositionToPixelConverter class should not be private");
+
+      Object result = method.invoke(converter, cp);
+      assertInstanceOf(Rectangle2D.class, result,
+          "The method getBoundsForCell(CellPosition) in the CellPositionToPixelConverter class should return a Rectangle2D");
+      return (Rectangle2D) result;
+    } catch (NoSuchMethodException e) {
+      fail("Could not find the method getBoundsForCell(CellPosition) in the CellPositionToPixelConverter class");
+    } catch (IllegalAccessException | InvocationTargetException e) {
+      throw new RuntimeException(e);
+    }
+    throw new IllegalStateException("Should not be possible to reach this point");
+  }
+
 
   static CellPositionToPixelConverter getConverter(GridDimension grid, Rectangle2D rect, double margin) {
     try {
