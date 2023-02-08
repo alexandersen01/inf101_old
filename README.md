@@ -15,6 +15,7 @@ I denne lab'en skal vi tegne et rutenett som vist over. Oppgaven består i hoved
 * [CellPositionToPixelConverter](#cellpositiontopixelconverter)
 * [drawGrid](#drawgrid)
 * [drawCells](#drawcells)
+* [Bonusoppgave](#bonusoppgave)
 
 ## Anbefalte forberedelser
 
@@ -174,3 +175,17 @@ La metoden iterere gjennom rutene i CellColorCollection -objektet, og tegne hver
 PS: siden drawCells ikke er avhengig av instansvariabler, bør metoden være *static*. Siden den ikke benyttes utenfor `GridCell` -klassen bør metoden være *private*.
 
 ✅ Du er ferdig med lab'en når testene i `TestGridView` passerer, og du kan kjøre Main-metoden og ser samme bilde som vist i illustrasjonen nå programmet kjører. Det skal fungere å endre størrelse på vinduet, og rutenettet skal strekke seg for å fylle hele lerretet med en fast avstand til kanten.
+
+
+---
+
+## Bonusoppgave
+
+- [ ] La klassen `BeautifulPicture` i pakken `no.uib.inf101.bonus` utvide `JPanel` og tegn en vakker tegning med utgangspunkt i kursnotatene for grafikk.  Benytt `Main` -klassen i samme pakke for å starte programmet.
+
+Det blir en liten premie til det peneste bildet. Jury'en legger vekt på:
+  * at bildet er vakkert, og
+  * at bildet er *adaptivt*, det vil si: tilpasser seg størrelsen på vinduet på en pen måte, og
+  * at koden er vakker å lese.
+
+Du er oppfordret til å bruke rikelig med hjelpemetoder og eventuelt også flere klasser som kan hjelpe til med tegningen dersom det er hensiktsmessig.
