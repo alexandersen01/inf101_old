@@ -14,7 +14,7 @@ I denne lab'en skal vi tegne et rutenett som vist over. Oppgaven består i hoved
 * [Opprett rutetnettet som skal tegnes](#opprett-rutenettet-som-skal-tegnes)
 * [CellPositionToPixelConverter](#cellpositiontopixelconverter)
 * [drawGrid](#drawgrid)
-* [drawCell](#drawcell)
+* [drawCells](#drawcells)
 
 ## Anbefalte forberedelser
 
@@ -140,7 +140,7 @@ Hint:
 >
 > Vi begynner med å regne ut `cellWidth`. Siden vi har 4 kolonner totalt, vil det gå med 5*30=150 piksler til marginer, og vi får da 190 piksler igjen å fordele på de fire kolonnene. Vi får da at cellen skal ha bredde 47.5.
 >
-> For å finne verdien til `cellX` begynner vi på `box.getX()` og legger til margin + rutebredde + margin + rutebredde + margin. Verdien blir da 30+30+47.5+30+47.5+30 = 215.
+> For å finne verdien til `cellX` begynner vi i dette tilfellet på `box.getX()` og legger til margin + rutebredde + margin + rutebredde + margin. Verdien blir da 30+30+47.5+30+47.5+30 = 215.
 >
 > Tilsvarende finner vi at `cellHeight` blir 40 og `cellY` blir 130.
 
@@ -162,7 +162,7 @@ Denne metoden i `GridView` skal ha et `Graphics2D` -objekt som parameter, og ikk
 
 PS: Siden metoden benytter instansmetoder kan metoden *ikke* være static. Siden metoden ikke skal benyttes av noen utenfor `GridView` -klassen, bør metoden være *private*.
 
-## drawCell
+## drawCells
 
 Denne metoden i `GridView` er uten returverdi, men skal ha tre parametre:
 * et `Graphics2D` -objekt, lerretet rutene skal tegnes på
