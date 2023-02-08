@@ -28,7 +28,7 @@ public class TestTextQuestions {
   @Test
   public void q3() {
     assertEquals(false, TextQuestions.a3,
-        "It is possible to create a class which implements" +
+        "It is possible to create a class which implements " +
             "CellColorCollection directly, without implementing IColorGrid. " +
             "Objects in such a class would have the type GridDimension, " +
             "but not the type IColorGrid."
@@ -38,8 +38,8 @@ public class TestTextQuestions {
   @Test
   public void q4() {
     assertEquals(false, TextQuestions.a4,
-        "It is possible to create a class which implements" +
-            "GridDimension directly, without implementing IColorGrid or" +
+        "It is possible to create a class which implements " +
+            "GridDimension directly, without implementing IColorGrid or " +
             "CellColorCollection. Objects in such a class would have the " +
             "type GridDimension, but not the type CellColorCollection."
     );
@@ -48,9 +48,9 @@ public class TestTextQuestions {
   @Test
   public void q5() {
     assertEquals(true, TextQuestions.a5,
-        "If an object has the type IColorGrid, it must indeed" +
-            "belong to a class that implements the interface IColorGrid." +
-            "If the class does not do so directly, it must do so" +
+        "If an object has the type IColorGrid, it must indeed " +
+            "belong to a class that implements the interface IColorGrid. " +
+            "If the class does not do so directly, it must do so " +
             "indirectly through inheritance."
     );
   }

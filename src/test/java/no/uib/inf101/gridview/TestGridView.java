@@ -116,7 +116,7 @@ public class TestGridView {
     try {
       Constructor<?> constructor = GridView.class.getConstructor(IColorGrid.class);
 
-      // Check that the constructor is public
+      // Check that the constructor is not private
       assertFalse(Modifier.isPrivate(constructor.getModifiers()),
           "The constructor GridView(IColorGrid) should not be private");
 
@@ -167,7 +167,7 @@ public class TestGridView {
       RecordGraphics2D g2 = new RecordGraphics2D();
 
       // Invoke the method
-      drawCell.invoke(null, g2, grid, TestCellPositionToPixelConverter.getConverter(grid, rect, margin));
+      drawCell.invoke(null, g2, grid, TestCellPositionToPixelConverter.getConverter(rect, grid, margin));
       return g2;
     } catch (NoSuchMethodException e) {
       fail("Could not find the method drawCells(Graphics2D, CellColorCollection,"

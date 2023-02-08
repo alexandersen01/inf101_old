@@ -27,7 +27,8 @@ public class TestCellPositionToPixelConverter {
         "Y--G")
     );
     CellPositionToPixelConverter converter = getConverter(
-        grid, new Rectangle2D.Double(30, 30, 340, 240), 30);
+        new Rectangle2D.Double(30, 30, 340, 240), grid,30
+    );
 
     Rectangle2D expected = new Rectangle2D.Double(215, 130, 47.5, 40);
     assertEquals(expected, getBoundsForCell(converter, new CellPosition(1, 2)));
@@ -57,21 +58,21 @@ public class TestCellPositionToPixelConverter {
   }
 
 
-  static CellPositionToPixelConverter getConverter(GridDimension grid, Rectangle2D rect, double margin) {
+  static CellPositionToPixelConverter getConverter(Rectangle2D box, GridDimension gd, double margin) {
     try {
       Constructor<?> constructor = CellPositionToPixelConverter.class.getConstructor(
-          GridDimension.class, Rectangle2D.class, double.class
+          Rectangle2D.class, GridDimension.class, double.class
       );
 
       // Check that the constructor is public
       assertTrue(Modifier.isPublic(constructor.getModifiers()),
-          "The constructor CellPositionToPixelConverter(IColorGrid, Rectangle2D, double)"
+          "The constructor CellPositionToPixelConverter(Rectangle2D, GridDimension, double)"
               + " should be public");
 
       // Create a new object using the constructor and return it
-      return (CellPositionToPixelConverter) constructor.newInstance(grid, rect, margin);
+      return (CellPositionToPixelConverter) constructor.newInstance(box, gd, margin);
     } catch (NoSuchMethodException e) {
-      fail("Could not find the constructor CellPositionToPixelConverter(IColorGrid, Rectangle2D, " +
+      fail("Could not find the constructor CellPositionToPixelConverter(Rectangle2D, GridDimension, " +
           "double) in the CellPositionToPixelConverter class");
     } catch (InvocationTargetException | InstantiationException | IllegalAccessException e) {
       throw new RuntimeException(e);

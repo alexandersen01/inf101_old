@@ -2,7 +2,7 @@
 
 ![Illustrasjon av ferdig program](./img/screenshot-done.png)
 
-I denne lab'en skal vi tegne et rutenett som vist over. Oppgaven består i hovedsak av to deler:
+I denne lab'en skal vi tegne et rutenett som vist over. Oppgaven består i hovedsak av tre deler:
 1. Skriv en klasse `ColorGrid` som representerer et rutenett av farger.
 2. Skriv en klasse `CellPositionToPixelConverter` som har en metode som regner ut piksel-koordinatene for en gitt rute.
 2. Skriv en klasse `GridView` som kan tegne et rutenett av farger.
@@ -39,11 +39,15 @@ I denne oppgaven skal du lage klassen `ColorGrid` ([link](./src/main/java/no/uib
 Du kan leke deg litt i `Main::main` for å sjekke for deg selv at klassen fungerer som du forventer. For eksempel:
 
 ```java
+// Opprett et rutenett med 3 rader og 4 kolonner
 IColorGrid grid = new ColorGrid(3, 4);
 System.out.println(grid.rows()); // forventer 3
 System.out.println(grid.cols()); // forventer 4
+
+// Sjekk at standard-verdien er null      
 System.out.println(grid.get(new CellPosition(1, 2))); // forventer null
-        
+
+// Sjekk at vi kan endre verdien på en gitt posisjon        
 grid.set(new CellPosition(1, 2), Color.RED);
 System.out.println(grid.get(new CellPosition(1, 2))); // forventer rød
 System.out.println(grid.get(new CellPosition(2, 1))); // forventer null
@@ -83,13 +87,15 @@ I `Main::main` skal vi nå opprette et rutenett, og gi det til `GridView`-konstr
   * Grønn i hjørnet nede til høyre (posisjon (2, 3))
 * [ ] I `GridView`, legg til en parameter av typen `IColorGrid` i konstruktøren, og legg også til en instansvariabel av samme type. Initialiser feltvariabelen med argumentet gitt til konstruktøren.
 
-For å tegne rutenettet gjenstår det å endre på *paintComponent* -metoden. Vi skal benytte oss av tre hjelpemetoder for å tegne rutenettet:
+For å tegne rutenettet gjenstår det å endre på *paintComponent* -metoden. Vi skal benytte oss av tre hjelpemetoder for å tegne rutenettet. I *paintComponent* gjør vi et kall til
 
-* `drawGrid` har som ansvar å tegne et fullstendig rutenett, inkludert alle rammer og ruter (alt innenfor det grå området i illustrasjonen). For å tegne selve rutene, kaller denne metoden på
+* `drawGrid`, som har som ansvar å tegne et fullstendig rutenett, inkludert alle rammer og ruter (alt innenfor det grå området i illustrasjonen). For å tegne selve rutene, kaller denne metoden på
 * `drawCells`, som har som ansvar å tegne en samling av ruter. For hver rute regner denne metode ut hvor ruten skal være ved å kalle på hjelpemetoden
 * `getBoundsForCell` som vet hvordan å regne ut posisjonen til én rute i rutenettet.
 
 Det viser seg at det er den sistnevnte metoden som er mest komplisert. Vi kunne hatt `getBoundForCell` som en vanlig hjelpemetode, men siden dette er en relativt isolert operasjon som vi ønsker å kunne teste separat, oppretter vi en en klasse for denne hjelpemetoden: *CellPositionToPixelConverter*.
+
+> Måten vi tenker på når vi skal utvikle et program er «top-down» -- man begynner med å dele opp oppgaven i store steg, og så drømmer vi opp hjelpemetoder vi trenger før disse hjelpemetodene faktisk eksisterer. Når vi faktisk koder, er det ofte lettest å gjøre det «bottom up», slik at vi kan teste hver enkelt byggeklosse/metode mens vi holder på. Dette for å si: hvilken rekkefølge du løser resten av oppgaven er opp til deg. Det kan være at det er lettere å hoppe litt frem og tilbake mellom de neste avsnittene.
 
 
 ## CellPositionToPixelConverter

@@ -1,5 +1,7 @@
 package no.uib.inf101.colorgrid;
 
+// Les om records her: https://inf101.ii.uib.no/notat/mutabilitet/#record
+
 /**
  * A CellPosition consists of a row and a column.
  *
