@@ -62,6 +62,28 @@ public class TestGridView {
   }
 
   @Test
+  public void drawCellsIllustratedSampleDifferentColors() {
+    // Sample case from assignment text
+    IColorGrid sampleGrid = TestCellPositionToPixelConverter.newGridFromString(String.join("\n",
+        "Y--R",
+        "----",
+        "G--B"
+    ));
+    Rectangle2D rect = new Rectangle2D.Double(30, 30, 340, 240);
+    double margin = 30;
+    RecordGraphics2D record = singleDrawCellsRun(sampleGrid, rect, margin);
+
+    // Check that the correct number of calls were made
+    assertEquals(12, record.getFillRecordShapes().size(),
+        "The drawCells method call draw 12 rectangles in the illustrated sample case");
+
+    assertColorIsDrawnOnceAt(record, Color.YELLOW, new Rectangle2D.Double(60, 60, 47.5, 40));
+    assertColorIsDrawnOnceAt(record, Color.RED, new Rectangle2D.Double(292.5, 60, 47.5, 40));
+    assertColorIsDrawnOnceAt(record, Color.GREEN, new Rectangle2D.Double(60, 200, 47.5, 40));
+    assertColorIsDrawnOnceAt(record, Color.BLUE, new Rectangle2D.Double(292.5, 200, 47.5, 40));
+  }
+
+  @Test
   public void drawCellsIllustratedSampleTweak() {
     // Sample case from assignment text
     IColorGrid sampleGrid = TestCellPositionToPixelConverter.newGridFromString(String.join("\n",
