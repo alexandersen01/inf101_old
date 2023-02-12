@@ -21,31 +21,26 @@ import java.util.Map;
 public class RecordGraphics2D extends java.awt.Graphics2D {
 
   private Color color = null;
-  private final List<Shape> fillRecordShapes = new ArrayList<>();
-  private final List<Color> fillRecordColors = new ArrayList<>();
+  private final List<Shape> recordedFillShapes = new ArrayList<>();
+  private final List<Color> recordedFillColors = new ArrayList<>();
 
-  public List<Shape> getFillRecordShapes() {
-    return this.fillRecordShapes;
+  public List<Shape> getRecordedFillShapes() {
+    return this.recordedFillShapes;
   }
 
-  public List<Color> getFillRecordColors() {
-    return this.fillRecordColors;
+  public List<Color> getRecordedFillColors() {
+    return this.recordedFillColors;
   }
 
-  public void resetRecord() {
-    this.fillRecordShapes.clear();
-    this.fillRecordColors.clear();
+  @Override
+  public void fill(Shape s) {
+    this.recordedFillShapes.add(s);
+    this.recordedFillColors.add(this.color);
   }
 
   @Override
   public void draw(Shape s) {
     // dummy ignores
-  }
-
-  @Override
-  public void fill(Shape s) {
-    this.fillRecordShapes.add(s);
-    this.fillRecordColors.add(this.color);
   }
 
   @Override
@@ -190,7 +185,7 @@ public class RecordGraphics2D extends java.awt.Graphics2D {
 
   @Override
   public Color getColor() {
-    throw new UnsupportedOperationException("Not supported yet.");
+    return this.color;
   }
 
   @Override

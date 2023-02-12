@@ -3,35 +3,51 @@ package no.uib.inf101.colorgrid;
 import org.junit.jupiter.api.Test;
 
 import java.awt.Color;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestColorGrid {
 
+  @Test
+  public void sanityTest() {
+    IColorGrid grid = new WColorGrid(3, 4);
+
+    // Check that number of rows and cols match up
+    assertEquals(3, grid.rows());
+    assertEquals(4, grid.cols());
+
+    // Check that default value is null
+    assertEquals(null, grid.get(new CellPosition(1, 2)));
+
+    // Check that we can set a value and retrieve it again
+    grid.set(new CellPosition(1, 2), Color.RED);
+    assertEquals(Color.RED, grid.get(new CellPosition(1, 2)));
+    assertEquals(null, grid.get(new CellPosition(2, 1)));
+  }
 
   @Test
-  public void testSize() {
-    IColorGrid grid = createGrid(10, 20);
-    assertEquals(10, grid.rows());
-    assertEquals(20, grid.cols());
+  public void testDimension() {
+    GridDimension gd = new WColorGrid(10, 20);
+    assertEquals(10, gd.rows());
+    assertEquals(20, gd.cols());
 
-    grid = createGrid(1, 1);
-    assertEquals(1, grid.rows());
-    assertEquals(1, grid.cols());
+    gd = new WColorGrid(1, 1);
+    assertEquals(1, gd.rows());
+    assertEquals(1, gd.cols());
   }
 
   @Test
   public void testGetDefaultValue() {
-    IColorGrid grid = createGrid(10, 20);
+    IColorGrid grid = new WColorGrid(10, 20);
     assertNull(grid.get(new CellPosition(0, 0)));
     assertNull(grid.get(new CellPosition(2, 3)));
   }
 
   @Test
   public void testSetGetInCorners() {
-    IColorGrid grid = createGrid(10, 20);
+    IColorGrid grid = new WColorGrid(10, 20);
     // Set color in corners
     grid.set(new CellPosition(0, 0), Color.RED);
     grid.set(new CellPosition(0, 19), Color.GREEN);
@@ -46,8 +62,34 @@ public class TestColorGrid {
   }
 
   @Test
+  public void testGetCells() {
+    IColorGrid grid = new WColorGrid(2, 2);
+
+    grid.set(new CellPosition(0, 0), Color.RED);
+    grid.set(new CellPosition(0, 1), Color.GREEN);
+    grid.set(new CellPosition(1, 0), Color.BLUE);
+    grid.set(new CellPosition(1, 1), Color.BLACK);
+
+    List<CellColor> expected = Arrays.asList(
+        new CellColor(new CellPosition(0, 0), Color.RED),
+        new CellColor(new CellPosition(0, 1), Color.GREEN),
+        new CellColor(new CellPosition(1, 0), Color.BLUE),
+        new CellColor(new CellPosition(1, 1), Color.BLACK)
+    );
+    List<CellColor> actual = grid.getCells();
+
+    assertEquals(expected.size(), actual.size());
+    for (CellColor cp : actual) {
+      assertTrue(expected.contains(cp));
+    }
+    for (CellColor cp : expected) {
+      assertTrue(actual.contains(cp));
+    }
+  }
+
+  @Test
   public void testIndexOutOfBoundsException() {
-    IColorGrid grid = createGrid(10, 20);
+    IColorGrid grid = new WColorGrid(10, 20);
 
     // Test out of bounds for get
     assertThrows(IndexOutOfBoundsException.class, () -> grid.get(new CellPosition(-1, 0)));
@@ -60,37 +102,5 @@ public class TestColorGrid {
     assertThrows(IndexOutOfBoundsException.class, () -> grid.set(new CellPosition(0, -1), Color.RED));
     assertThrows(IndexOutOfBoundsException.class, () -> grid.set(new CellPosition(10, 0), Color.RED));
     assertThrows(IndexOutOfBoundsException.class, () -> grid.set(new CellPosition(0, 20), Color.RED));
-  }
-
-
-  /**
-   * Create a new ColorGrid with the given rows and cols. This method
-   * will only work if you have implemented the ColorGrid class with
-   * the correct parameters (two int's), otherwise the test will fail
-   * when calling this method.
-   *
-   * @param rows  number of rows in the colorgrid to create
-   * @param cols  number of columns in the colorgrid to create
-   * @return    a new ColorGrid
-   */
-  public IColorGrid createGrid(int rows, int cols) {
-    try {
-      Constructor<?> c = ColorGrid.class.getConstructor(int.class, int.class);
-      Object o = c.newInstance(rows, cols);
-      if (o instanceof IColorGrid grid) {
-        return grid;
-      }
-      fail("Constructor did not return an IColorGrid. This could be "
-          + "because you forgot to implement the IColorGrid interface.");
-    } catch (NoSuchMethodException e) {
-      fail("Could not find constructor ColorGrid(int, int)");
-    } catch (InvocationTargetException e) {
-      fail("Constructor crashed: " + e);
-    } catch (InstantiationException e) {
-      throw new RuntimeException(e);
-    } catch (IllegalAccessException e) {
-      fail("Constructor is not public: " + e);
-    }
-    return null;
   }
 }

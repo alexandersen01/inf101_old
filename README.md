@@ -21,7 +21,8 @@ I denne lab'en skal vi tegne et rutenett som vist over. Oppgaven består i hoved
 
 * Laben antar at du har kjennskap til grunnleggende java, inkludert [grensesnitt](https://inf101.ii.uib.no/notat/grensesnitt/), [klasser og objekter](https://inf101.ii.uib.no/notat/objekter/).
 * Du bør ha skummet igjennom kursnotatene om [arv](https://inf101.ii.uib.no/notat/arv), men vi kommer ikke til å gå i dypden på dette i denne lab'en.
-* Kursnotatene om [grafikk](https://inf101.ii.uib.no/notat/grafikk) vil være spesielt relevante. Kan brukes som et oppslagsverk for å finne ut hvordan noe kan tegnes.
+* I den utleverte koden dukker det opp to *record*-klasser. Du trenger ikke sette deg inn i mutabilitet for denne lab'en, men kursnotatene om dette inneholder også et [avsnitt om record-klasser](https://inf101.ii.uib.no/notat/mutabilitet/#record) hvor det er verdt å skumme gjennom eksempelet som demonstrerer bruken.
+* Kursnotatene om [grafikk](https://inf101.ii.uib.no/notat/grafikk) vil naturligvis være spesielt relevante, primært de tre første avsnittene om rammeverket, koordinatsystemet og grunnleggende figurer; men også hjelpemetoder, farger og adaptiv tegning blir adressert i lab'en.
 
 ## Bli kjent med utlevert kode
 
@@ -114,16 +115,16 @@ Disse siste delene med informasjon vil ikke endre seg særlig fra kall til kall,
 
 I klassen `CellPositionToPixelConverter`:
 
-* [ ] Opprett feltvariabler:
+* [ ] Opprett instansvariabler:
   * Et `Rectangle2D` -objekt `box` som beskriver innenfor hvilket område rutenettet skal tegnes
   * Et `GridDimension` -objekt `gd` som beskriver størrelsen til rutenettet rutene vil være en del av
   * En `double` kalt `margin` som beskriver hvor stor avstanden skal være mellom rutene
-* [ ] Opprett en konstruktør i klassen med tre parametre: et `Rectangle2D` -objekt, et `GridDimension` -objekt og en `double`. Initaliser feltvariablene med verdiene mottat i konstruktøren.
+* [ ] Opprett en konstruktør i klassen med tre parametre: et `Rectangle2D` -objekt, et `GridDimension` -objekt og en `double`. Initaliser feltvariablene med argumentene som mottas i konstruktøren.
 * [ ] Opprett metoden `getBoundsForCell` med en parameter av typen `CellPosition` (i figur under navgitt `cp`) og returtype `Rectangle2D`.
 
 Returverdien er et `Rectangle2D` -objekt. For å opprette dette objektet, må du regne ut fire verdier: x, y, bredde og høyde for den gitte ruten. Så kan du returnere et nytt `Rectangle2D.Double` -objekt med disse verdiene.
 
-Illustrasjonen under visualiserer parameterne og resultatvariablene. Svarte variabler er gitt som input eller er tilgjengelig som feltvariabler, mens de røde variablene er de du skal regne ut og returnere.
+Illustrasjonen under visualiserer parameterne og resultatvariablene. Variabler i svart tekst er gitt som input eller er tilgjengelig som feltvariabler, mens variablene i rød kursiv tekst er de du skal regne ut og returnere.
 
 ![Illustrasjon av variabler som opptrer i getBoundsForCell](./img/getBoundsForCell.png)
 
@@ -141,7 +142,7 @@ Hint:
 >
 > Vi begynner med å regne ut `cellWidth`. Siden vi har 4 kolonner totalt, vil det gå med 5*30=150 piksler til marginer, og vi får da 190 piksler igjen å fordele på de fire kolonnene. Vi får da at cellen skal ha bredde 47.5.
 >
-> For å finne verdien til `cellX` begynner vi i dette tilfellet på `box.getX()` og legger til margin + rutebredde + margin + rutebredde + margin. Verdien blir da 30+30+47.5+30+47.5+30 = 215.
+> For å finne verdien til `cellX` begynner vi på posisjonen `box.getX()` og går derfra videre mot høyre ved å plusse på margin + rutebredde + margin + rutebredde + margin. Verdien blir da 30+30+47.5+30+47.5+30 = 215.
 >
 > Tilsvarende finner vi at `cellHeight` blir 40 og `cellY` blir 130.
 
