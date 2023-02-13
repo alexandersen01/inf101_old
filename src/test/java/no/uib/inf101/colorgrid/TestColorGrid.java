@@ -25,8 +25,11 @@ public class TestColorGrid {
     grid.set(new CellPosition(1, 2), Color.RED);
     assertEquals(Color.RED, grid.get(new CellPosition(1, 2)));
     assertEquals(null, grid.get(new CellPosition(2, 1)));
+    // Check that we can set a new value and retrieve it again
+    grid.set(new CellPosition(1, 2), Color.GREEN);
+    assertEquals(Color.GREEN, grid.get(new CellPosition(1, 2)));
   }
-
+    
   @Test
   public void testDimension() {
     GridDimension gd = new WColorGrid(10, 20);
