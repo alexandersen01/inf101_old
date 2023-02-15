@@ -15,4 +15,6 @@ public interface CellColorCollection {
    */
   List<CellColor> getCells();
 
+  
+
 }
