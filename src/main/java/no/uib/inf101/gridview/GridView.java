@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import no.uib.inf101.colorgrid.CellColor;
 import no.uib.inf101.colorgrid.CellColorCollection;
-import no.uib.inf101.colorgrid.GridDimension;
 import no.uib.inf101.colorgrid.IColorGrid;
 
 public class GridView extends JPanel {
@@ -20,28 +19,21 @@ public class GridView extends JPanel {
   private IColorGrid grid;
   static final double OUTERMARGIN = 30;
   private static final Color MARGINCOLOR = Color.LIGHT_GRAY;
-  private static final Rectangle2D Rectangle2D = null;
-  private static final GridDimension GridDimension = null;
-  private Graphics2D Graphics2D;
-
-
 
 
   //set standard window size in pixels
   public GridView(IColorGrid grid) {
     this.setPreferredSize(new Dimension(400, 300));
     this.grid = grid;
-
   }
 
-  @Override
+@Override
   public void paintComponent(Graphics g) {
 
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g;
     drawGrid(g2);
-    
-}
+  }
 
   //create a drawGrid method with a Graphics2D object as parameter
   private void drawGrid(Graphics2D g) {
@@ -58,24 +50,13 @@ public class GridView extends JPanel {
     g2.fill(rect);
     
     //create a CellPositionToPixelConverter object 
-    CellPositionToPixelConverter cps = new CellPositionToPixelConverter(rect, GridDimension, margin);
+    CellPositionToPixelConverter cps = new CellPositionToPixelConverter(rect, grid, margin);
 
     drawCells(g, grid, cps);
   }
 
   private static void drawCells(Graphics2D g, CellColorCollection grid, CellPositionToPixelConverter cps) {
 
-    // Graphics2D g2 = (Graphics2D) g;
-    // for (CellColor cell : grid.getCells()) {
-    //   if (cell.color() == null) {
-    //     g2.setColor(Color.DARK_GRAY);
-    //   } else {
-    //     g.setColor(cell.color());
-
-    //   }
-    //   Rectangle2D rect = cps.getBoundsForCell(cell.cellPosition());
-    //   g2.fill(rect);
-    // }
     List<CellColor> cells = grid.getCells();
     for (CellColor cell : cells){
       Rectangle2D rect = cps.getBoundsForCell(cell.cellPosition());

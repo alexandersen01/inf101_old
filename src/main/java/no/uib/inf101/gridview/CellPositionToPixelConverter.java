@@ -1,5 +1,4 @@
 package no.uib.inf101.gridview;
-import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;
 
 import no.uib.inf101.colorgrid.CellPosition;
@@ -26,11 +25,12 @@ public class CellPositionToPixelConverter {
   //create helper method with parameters: cellPosition
   public Rectangle2D getBoundsForCell(CellPosition cellPosition) {
 
-    this.cellWidth =  (box.getWidth() - ((gd.cols() + 1) * box.getX())) / gd.cols();
-    this.cellHeight = (box.getHeight() - ((gd.rows() + 1) * box.getY())) / gd.rows();
-    //box.getHeight() / (gd.rows() * 2);
-    this.cellX = gd.cols() * margin + cellPosition.col() * cellWidth;
-    this.cellY = gd.rows() * margin + cellPosition.row() * cellHeight;
+    this.cellWidth = (box.getWidth() - (margin * (gd.cols() + 1))) / gd.cols();
+    this.cellHeight = (box.getHeight() - (margin * (gd.rows() + 1))) / gd.rows();
+
+    this.cellX = box.getX() + cellPosition.col() * (cellWidth + margin) + margin;
+    this.cellY = box.getY() + cellPosition.row() * (cellHeight + margin) + margin;
+  
 
     return new Rectangle2D.Double(this.cellX, this.cellY, this.cellWidth, this.cellHeight);
   }
