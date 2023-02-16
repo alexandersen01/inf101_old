@@ -5,17 +5,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
 
 import no.uib.inf101.colorgrid.CellColor;
 import no.uib.inf101.colorgrid.CellColorCollection;
-import no.uib.inf101.colorgrid.CellPosition;
 import no.uib.inf101.colorgrid.GridDimension;
 import no.uib.inf101.colorgrid.IColorGrid;
-import no.uib.inf101.gridview.CellPositionToPixelConverter;
-import no.uib.inf101.colorgrid.ColorGrid;
 
 public class GridView extends JPanel {
 
@@ -25,8 +22,8 @@ public class GridView extends JPanel {
   private static final Color MARGINCOLOR = Color.LIGHT_GRAY;
   private static final Rectangle2D Rectangle2D = null;
   private static final GridDimension GridDimension = null;
-  //create a CellPositionToPixelConverter object called cps
-  private CellPositionToPixelConverter cps;
+  private Graphics2D Graphics2D;
+
 
 
 
@@ -39,42 +36,56 @@ public class GridView extends JPanel {
 
   @Override
   public void paintComponent(Graphics g) {
+
     super.paintComponent(g);
-    drawGrid(g);
+    Graphics2D g2 = (Graphics2D) g;
+    drawGrid(g2);
     
 }
 
   //create a drawGrid method with a Graphics2D object as parameter
-  private void drawGrid(Graphics g) {
+  private void drawGrid(Graphics2D g) {
     Graphics2D g2 = (Graphics2D) g;
     double margin = GridView.OUTERMARGIN;
     Color color = GridView.MARGINCOLOR;
     double x = margin;
     double y = margin;
-    double width = this.getWidth() - 2 * margin;
-    double height = this.getHeight() - 2 * margin;
+    double width = this.getWidth() - (2 * margin);
+    double height = this.getHeight() - (2 * margin);
     //create a Rectangle2D object with the margin as parameter
+    Rectangle2D rect = new Rectangle2D.Double(x, y, width, height);
     g2.setColor(color);
-    g2.fill(new Rectangle2D.Double(x, y, width, height));
+    g2.fill(rect);
     
     //create a CellPositionToPixelConverter object 
-    CellPositionToPixelConverter cps = new CellPositionToPixelConverter(Rectangle2D, GridDimension, margin);
-
+    CellPositionToPixelConverter cps = new CellPositionToPixelConverter(rect, GridDimension, margin);
 
     drawCells(g, grid, cps);
   }
 
-  private void drawCells(Graphics g, CellColorCollection grid, CellPositionToPixelConverter cps) {
-    Graphics2D g2 = (Graphics2D) g;
-    for (CellColor cell : grid.getCells()) {
-      if (cell.color() == null) {
-        g2.setColor(Color.DARK_GRAY);
-      } else {
-        g.setColor(cell.color());
+  private static void drawCells(Graphics2D g, CellColorCollection grid, CellPositionToPixelConverter cps) {
 
-      }
+    // Graphics2D g2 = (Graphics2D) g;
+    // for (CellColor cell : grid.getCells()) {
+    //   if (cell.color() == null) {
+    //     g2.setColor(Color.DARK_GRAY);
+    //   } else {
+    //     g.setColor(cell.color());
+
+    //   }
+    //   Rectangle2D rect = cps.getBoundsForCell(cell.cellPosition());
+    //   g2.fill(rect);
+    // }
+    List<CellColor> cells = grid.getCells();
+    for (CellColor cell : cells){
       Rectangle2D rect = cps.getBoundsForCell(cell.cellPosition());
-      g2.fill(rect);
+      Color color = cell.color();
+      if (cell.color() == null){
+        color = Color.DARK_GRAY;
+      }
+      g.setColor(color);
+      g.fill(rect);
     }
+    
   }
 }

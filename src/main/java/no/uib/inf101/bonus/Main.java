@@ -16,14 +16,15 @@ public class Main {
     // men tilpass den slik at du oppretter et BeautifulPicture -objekt
     // som lerret.
     ColorGrid grid = new ColorGrid(3, 4);
+    
     grid.set(new CellPosition(0, 0), Color.RED);
     grid.set(new CellPosition(0, 3), Color.BLUE);
     grid.set(new CellPosition(2, 0), Color.YELLOW);
     grid.set(new CellPosition(2, 3), Color.GREEN);
 
-    // Rectangle2D shape = new Rectangle2D.Float();
-    // shape.setFrame(100, 150, 200,100);
+    Rectangle2D shape = new Rectangle2D.Float();
+    shape.setFrame(100, 150, 200,100);
 
-    // GridDimension dim = new GridDimension(3, 4);
+
   }
 }

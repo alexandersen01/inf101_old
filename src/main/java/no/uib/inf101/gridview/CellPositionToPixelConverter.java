@@ -25,8 +25,10 @@ public class CellPositionToPixelConverter {
 
   //create helper method with parameters: cellPosition
   public Rectangle2D getBoundsForCell(CellPosition cellPosition) {
-    this.cellWidth =  (box.getWidth() - (gd.cols() + 1) * box.getX()) / gd.cols();
-    this.cellHeight = box.getHeight() / (gd.rows() * 2);
+
+    this.cellWidth =  (box.getWidth() - ((gd.cols() + 1) * box.getX())) / gd.cols();
+    this.cellHeight = (box.getHeight() - ((gd.rows() + 1) * box.getY())) / gd.rows();
+    //box.getHeight() / (gd.rows() * 2);
     this.cellX = gd.cols() * margin + cellPosition.col() * cellWidth;
     this.cellY = gd.rows() * margin + cellPosition.row() * cellHeight;
 
